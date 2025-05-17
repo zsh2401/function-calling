@@ -25,6 +25,7 @@ export async function functionalChatCompletion(
         onTextDelta,
         messages,
         onReasonDelta,
+        onNextChatCompletion,
         ...rest
     } = body
 
@@ -34,6 +35,7 @@ export async function functionalChatCompletion(
         []
 
     while (true) {
+        onNextChatCompletion?.()
         const completion =
             await openai.chat.completions.create({
                 ...rest,
@@ -54,10 +56,10 @@ export async function functionalChatCompletion(
         })
 
         const responseMessage: FunctionalCompletionMessage =
-            {
-                role: 'assistant',
-                content: completionText,
-            }
+        {
+            role: 'assistant',
+            content: completionText,
+        }
 
         updatingMessages.push(responseMessage)
         newlyAddedMessages.push(responseMessage)
