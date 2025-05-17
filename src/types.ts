@@ -75,9 +75,13 @@ export interface FunctionalChatCompletionParamsStreaming {
     client: OpenAI
     body: RequestBody
     callbacks?: {
-        onStartingNewChatCompletion?: () => void
-        onFinishCurrentChatCompletion?: () => void
+        onStaringOneChatCompletion?: () => void
+        onOneChatCompletionFinished?: (args: OneChatCompletionCompletedArgs) => void
         onTextDelta?: (text: string) => void
         onReasonDelta?: (text: string) => void
     }
+}
+export interface OneChatCompletionCompletedArgs {
+    assistantMessage: OpenAIAssistantMessage
+    usage?: CompletionUsage
 }

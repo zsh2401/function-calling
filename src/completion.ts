@@ -8,6 +8,7 @@ import {
 import { streaming } from './streaming'
 import { fulfill } from './fulfill'
 import { objectDelta } from './objectDelta'
+import { OpenAIAssistantMessage } from 'es'
 
 /**
  * Perform OpenAI chat completion with strong type definition support.
@@ -24,7 +25,7 @@ export async function functionalChatCompletion(
     const updatingMessages = [...args.body.messages]
     const newlyAddedMessages: FunctionalCompletionMessage[] = []
     while (true) {
-        args.callbacks?.onStartingNewChatCompletion?.()
+        args.callbacks?.onStaringOneChatCompletion?.()
         const completion =
             await args.client.chat.completions.create({
                 ...args.body,
@@ -44,17 +45,17 @@ export async function functionalChatCompletion(
             onReasonDelta: args.callbacks?.onReasonDelta,
         })
 
-        const responseMessage: FunctionalCompletionMessage =
+        const assistantMessage: OpenAIAssistantMessage =
         {
             role: 'assistant',
             content: completionText,
         }
 
-        updatingMessages.push(responseMessage)
-        newlyAddedMessages.push(responseMessage)
+        updatingMessages.push(assistantMessage)
+        newlyAddedMessages.push(assistantMessage)
 
         if (args.body.tools && toolCalls.length > 0) {
-            responseMessage.tool_calls = toolCalls
+            assistantMessage.tool_calls = toolCalls
             const toolResult = await fulfill(
                 toolCalls,
                 args.body.tools
@@ -69,7 +70,10 @@ export async function functionalChatCompletion(
             totalUsage = objectDelta(totalUsage, usage)
         }
 
-        args.callbacks?.onFinishCurrentChatCompletion?.()
+        args.callbacks?.onOneChatCompletionFinished?.({
+            assistantMessage,
+            usage
+        })
         if (toolCalls.length === 0) {
             break
         }
