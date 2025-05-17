@@ -20,13 +20,12 @@ export type OpenAIToolCall =
 export type OpenAIAssistantMessage =
     OpenAI.Chat.Completions.ChatCompletionAssistantMessageParam
 
-export type OpenAIToolCallMessage =
-    OpenAI.Chat.Completions.ChatCompletionToolMessageParam
 export type OpenAIToolMessage =
     OpenAI.Chat.Completions.ChatCompletionToolMessageParam
+
 export type FunctionalCompletionMessage =
     | OpenAIAssistantMessage
-    | OpenAIToolCallMessage
+    | OpenAIToolMessage
 
 export interface ToolFunction<S extends ZodBase> {
     (args: z.output<S>): Promise<any>

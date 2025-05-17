@@ -45,7 +45,7 @@ export async function functionalChatCompletion(
             onReasonDelta: args.callbacks?.onReasonDelta,
         })
 
-        const assistantMessage: OpenAIAssistantMessage =
+        const assistantMessage: FunctionalCompletionMessage =
         {
             role: 'assistant',
             content: completionText,
