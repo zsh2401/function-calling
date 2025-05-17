@@ -64,7 +64,7 @@ export type RequestBody = Omit<
     'tools' | "stream" | "stream_options"
 > & {
 
-    tools: BetterTool<any>[]
+    tools?: BetterTool<any>[]
     stream: true
     tool_choice: ChatCompletionToolChoiceOption
     stream_options: {
