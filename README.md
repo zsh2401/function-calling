@@ -1,19 +1,26 @@
-# OpenAI function calling
+<img src="./maple.png" style="display:block; margin: 0 auto"/>
+
+<br/>
+
+<h1 style="text-align: center">
+function-calling
+</h1>
+
+The best Node.JS library to help you performing a OpenAI SDK function calling.
 
 ```sh
-npm i openai-function-calling
+npm i function-calling
 ```
 
-The best Node.JS library to help you performing a openai function calling.
+## 🤩 Key Features
 
-## Key Features
+- 🔧 Automatically invoke tools if necessary.
+- 🔧→✉️→🔧→✉️ Continuously invoke tools in a loop until all tool call is satisfied.
+- 🧐 Dynamically build tools so we can adjust tools for each call. (Such as modify parameters)
+- 💰💰 Automatically summarize usages of internal chat completions.
+- 💦 Streaming callbacks.
 
-- Automatically invoke tools if necessary.
-- Dynamically build tools so we can adjust tools for each call. (Such as modify parameters)
-- Automatically summarize usages of internal chat completions.
-- Streaming callbacks.
-
-## Getting Started
+## 😎 Getting Started
 
 There's a example presents a situation that involves continuous function callings.
 
@@ -149,7 +156,7 @@ We are using vitest for unit tests.
 pnpm test
 ```
 
-### Contribute
+### Contribution
 
 Once you have developed codes, please raise PR to **dev** branch.
 
