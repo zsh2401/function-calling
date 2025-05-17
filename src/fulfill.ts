@@ -13,7 +13,7 @@ export async function fulfill(
     tools: BetterTool<any>[]
 ): Promise<ToolCallResult[]> {
     const result: ToolCallResult[] = []
-    console.log('fulfilling', toolCalls)
+    // console.log('fulfilling', toolCalls)
     const name2func = new Map(
         tools.map((tool) => [
             tool.openAIFormat.function.name,
@@ -40,6 +40,6 @@ export async function fulfill(
             shouldPersist: func.shouldPersistent,
         })
     }
-    console.log('fulfilled tool calls', result)
+    // console.log('fulfilled tool calls', result)
     return result
 }

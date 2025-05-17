@@ -17,32 +17,20 @@ import { objectDelta } from './objectDelta'
  * @returns
  */
 export async function functionalChatCompletion(
-    openai: OpenAI,
-    body: FunctionalChatCompletionParamsStreaming
+    args: FunctionalChatCompletionParamsStreaming
 ): Promise<Result> {
-    const {
-        tools,
-        onTextDelta,
-        messages,
-        onReasonDelta,
-        onFinishCurrentChatCompletion,
-        onStartingNewChatCompletion,
-        ...rest
-    } = body
 
     let totalUsage: CompletionUsage | undefined = void 0
-    const updatingMessages = [...messages]
-    const newlyAddedMessages: FunctionalCompletionMessage[] =
-        []
-
+    const updatingMessages = [...args.body.messages]
+    const newlyAddedMessages: FunctionalCompletionMessage[] = []
     while (true) {
-        onStartingNewChatCompletion?.()
+        args.callbacks?.onStartingNewChatCompletion?.()
         const completion =
-            await openai.chat.completions.create({
-                ...rest,
+            await args.client.chat.completions.create({
+                ...args.body,
                 messages: updatingMessages,
-                tools: tools
-                    ? tools.map((t) => t.openAIFormat)
+                tools: args.body.tools
+                    ? args.body.tools.map((t) => t.openAIFormat)
                     : void 0,
             })
         const {
@@ -52,8 +40,8 @@ export async function functionalChatCompletion(
             completionText,
         } = await streaming({
             completion,
-            onTextDelta,
-            onReasonDelta,
+            onTextDelta: args.callbacks?.onTextDelta,
+            onReasonDelta: args.callbacks?.onReasonDelta,
         })
 
         const responseMessage: FunctionalCompletionMessage =
@@ -65,11 +53,11 @@ export async function functionalChatCompletion(
         updatingMessages.push(responseMessage)
         newlyAddedMessages.push(responseMessage)
 
-        if (tools && toolCalls.length > 0) {
+        if (args.body.tools && toolCalls.length > 0) {
             responseMessage.tool_calls = toolCalls
             const toolResult = await fulfill(
                 toolCalls,
-                tools
+                args.body.tools
             )
             for (const tr of toolResult) {
                 updatingMessages.push(tr.openaiToolResult)
@@ -81,7 +69,7 @@ export async function functionalChatCompletion(
             totalUsage = objectDelta(totalUsage, usage)
         }
 
-        onFinishCurrentChatCompletion?.()
+        args.callbacks?.onFinishCurrentChatCompletion?.()
         if (toolCalls.length === 0) {
             break
         }

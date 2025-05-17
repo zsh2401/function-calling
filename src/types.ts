@@ -1,6 +1,8 @@
 import OpenAI from 'openai'
 import {
     ChatCompletionMessageToolCall,
+    ChatCompletionStreamOptions,
+    ChatCompletionToolChoiceOption,
     CompletionUsage,
 } from 'openai/resources'
 import { Stream } from 'openai/streaming'
@@ -57,14 +59,24 @@ export interface Result {
     usage?: CompletionUsage
     messages: FunctionalCompletionMessage[]
 }
-export interface FunctionalChatCompletionParamsStreaming
-    extends Omit<
-        OpenAI.Chat.Completions.ChatCompletionCreateParamsStreaming,
-        'tools'
-    > {
-    onStartingNewChatCompletion?: () => void
-    onFinishCurrentChatCompletion?: () => void
-    tools?: BetterTool<any>[]
-    onTextDelta?: (text: string) => void
-    onReasonDelta?: (text: string) => void
+export type RequestBody = Omit<
+    OpenAI.Chat.Completions.ChatCompletionCreateParamsStreaming,
+    'tools' | "stream" | "stream_options"
+> & {
+    tools: BetterTool<any>[]
+    stream: true
+    tool_choice: Exclude<ChatCompletionToolChoiceOption, "none">
+    stream_options: {
+        include_usage: true;
+    }
+}
+export interface FunctionalChatCompletionParamsStreaming {
+    client: OpenAI
+    body: RequestBody
+    callbacks?: {
+        onStartingNewChatCompletion?: () => void
+        onFinishCurrentChatCompletion?: () => void
+        onTextDelta?: (text: string) => void
+        onReasonDelta?: (text: string) => void
+    }
 }
