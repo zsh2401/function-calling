@@ -62,7 +62,8 @@ export interface FunctionalChatCompletionParamsStreaming
         OpenAI.Chat.Completions.ChatCompletionCreateParamsStreaming,
         'tools'
     > {
-    onNextChatCompletion?: () => void
+    onStartingNewChatCompletion?: () => void
+    onFinishCurrentChatCompletion?: () => void
     tools?: BetterTool<any>[]
     onTextDelta?: (text: string) => void
     onReasonDelta?: (text: string) => void

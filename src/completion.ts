@@ -25,7 +25,8 @@ export async function functionalChatCompletion(
         onTextDelta,
         messages,
         onReasonDelta,
-        onNextChatCompletion,
+        onFinishCurrentChatCompletion,
+        onStartingNewChatCompletion,
         ...rest
     } = body
 
@@ -35,7 +36,7 @@ export async function functionalChatCompletion(
         []
 
     while (true) {
-        onNextChatCompletion?.()
+        onStartingNewChatCompletion?.()
         const completion =
             await openai.chat.completions.create({
                 ...rest,
@@ -56,10 +57,10 @@ export async function functionalChatCompletion(
         })
 
         const responseMessage: FunctionalCompletionMessage =
-            {
-                role: 'assistant',
-                content: completionText,
-            }
+        {
+            role: 'assistant',
+            content: completionText,
+        }
 
         updatingMessages.push(responseMessage)
         newlyAddedMessages.push(responseMessage)
@@ -80,6 +81,7 @@ export async function functionalChatCompletion(
             totalUsage = objectDelta(totalUsage, usage)
         }
 
+        onFinishCurrentChatCompletion?.()
         if (toolCalls.length === 0) {
             break
         }
