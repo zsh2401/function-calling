@@ -1,11 +1,12 @@
-<img src="./maple.png" style="display:block; margin: 0 auto"/>
-
-<br/>
-
-<h1 style="text-align: center">
-function-calling
-</h1>
-
+<div style="display:flex;flex-direction:row;justify-content:center">
+    <div>
+        <br/>
+        <h1>
+             <img src="./maple.png" style="height:20px"/> function-calling
+             <img src="./maple.png" style="height:20px"/> 
+        </h1>
+    </div>
+</div>
 The best Node.JS library to help you performing a OpenAI SDK function calling.
 
 ```sh
