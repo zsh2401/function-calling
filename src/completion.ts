@@ -3,12 +3,12 @@ import { CompletionUsage } from 'openai/resources'
 import {
     FunctionalChatCompletionParamsStreaming,
     FunctionalCompletionMessage,
+    OpenAIAssistantMessage,
     Result,
 } from './types'
 import { streaming } from './streaming'
-import { fulfill } from './fulfill'
+import { fulfill, ToolCallResult } from './fulfill'
 import { objectDelta } from './objectDelta'
-import { OpenAIAssistantMessage, ToolCallResult } from 'es'
 
 /**
  * Perform OpenAI chat completion with strong type definition support.
@@ -45,7 +45,7 @@ export async function functionalChatCompletion(
             onReasonDelta: args.callbacks?.onReasonDelta,
         })
 
-        const assistantMessage: FunctionalCompletionMessage =
+        const assistantMessage: OpenAIAssistantMessage =
         {
             role: 'assistant',
             content: completionText,
