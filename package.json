@@ -1,0 +1,57 @@
+{
+    "name": "function-calling",
+    "version": "1.0.0",
+    "description": "The easiest way to perform your chat completion to LLM with function calling.",
+    "main": "cjs/index.js",
+    "module": "es/index.js",
+    "types": "cjs/index.d.ts",
+    "scripts": {
+        "build:cjs": "tsc -p tsconfig.cjs.json && tsc-alias -p tsconfig.cjs.json",
+        "build:es": "tsc -p tsconfig.es.json && tsc-alias -p tsconfig.es.json",
+        "build": "pnpm build:es && pnpm build:cjs",
+        "prebuild": "pnpm clean",
+        "clean": "rimraf -rf cjs es",
+        "test": "vitest",
+        "style": "pnpm prettier --check . && pnpm eslint .",
+        "fix": "pnpm prettier --write . && pnpm eslint . --fix",
+        "prepublish": "pnpm style && pnpm build"
+    },
+    "keywords": [],
+    "author": "zsh2401",
+    "homepage": "https://github.com/zsh2401/function-calling",
+    "repository": {
+        "type": "github",
+        "url": "https://github.com/zsh2401/function-calling"
+    },
+    "license": "MIT",
+    "packageManager": "pnpm@10.4.1",
+    "devDependencies": {
+        "@eslint/js": "^9.26.0",
+        "@types/express": "^5.0.1",
+        "eslint": "^9.26.0",
+        "eslint-config-prettier": "^10.1.5",
+        "eslint-plugin-no-floating-promise": "^2.0.0",
+        "eslint-plugin-prettier": "^5.4.0",
+        "eslint-plugin-promise": "^7.2.1",
+        "express": "^5.1.0",
+        "openai": "^4.100.0",
+        "prettier": "3.5.3",
+        "rimraf": "^6.0.1",
+        "tsc-alias": "^1.8.16",
+        "typescript": "^5.8.3",
+        "typescript-eslint": "^8.32.0",
+        "vite-plugin-dts": "^4.5.3",
+        "vitest": "^3.1.3",
+        "zod": "^3.24.4"
+    },
+    "engines": {
+        "node": ">=18"
+    },
+    "peerDependencies": {
+        "openai": "^4.100.0",
+        "zod": "^3.24.4"
+    },
+    "dependencies": {
+        "zod-to-json-schema": "^3.24.5"
+    }
+}

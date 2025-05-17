@@ -1,0 +1,32 @@
+{
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "editor.tabSize": 4,
+    // #每次保存的时候自动格式化
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    // 每次保存的时候将代码按eslint格式进行修复
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "always",
+        "source.fixAll.prettier": "always"
+    },
+    "[vue]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.detectIndentation": true,
+    "[shellscript]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python"
+    },
+    "[ignore]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    }
+}
