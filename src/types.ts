@@ -8,6 +8,7 @@ import {
 import { Stream } from 'openai/streaming'
 import { z } from 'zod'
 import { BetterTool } from './create'
+import { ToolCallResult } from './fulfill'
 
 export type ZodBase = z.ZodObject<any, any, any, any>
 export type OpenAITool =
@@ -18,6 +19,7 @@ export type OpenAIToolCall =
 
 export type OpenAIAssistantMessage =
     OpenAI.Chat.Completions.ChatCompletionAssistantMessageParam
+
 export type OpenAIToolCallMessage =
     OpenAI.Chat.Completions.ChatCompletionToolMessageParam
 export type OpenAIToolMessage =
@@ -83,5 +85,6 @@ export interface FunctionalChatCompletionParamsStreaming {
 }
 export interface OneChatCompletionCompletedArgs {
     assistantMessage: OpenAIAssistantMessage
+    toolsResult?: ToolCallResult[]
     usage?: CompletionUsage
 }

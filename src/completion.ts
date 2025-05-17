@@ -8,7 +8,7 @@ import {
 import { streaming } from './streaming'
 import { fulfill } from './fulfill'
 import { objectDelta } from './objectDelta'
-import { OpenAIAssistantMessage } from 'es'
+import { OpenAIAssistantMessage, ToolCallResult } from 'es'
 
 /**
  * Perform OpenAI chat completion with strong type definition support.
@@ -54,6 +54,7 @@ export async function functionalChatCompletion(
         updatingMessages.push(assistantMessage)
         newlyAddedMessages.push(assistantMessage)
 
+        let toolsResult: ToolCallResult[] | undefined = void 0
         if (args.body.tools && toolCalls.length > 0) {
             assistantMessage.tool_calls = toolCalls
             const toolResult = await fulfill(
@@ -61,6 +62,8 @@ export async function functionalChatCompletion(
                 args.body.tools
             )
             for (const tr of toolResult) {
+                toolsResult ??= []
+                toolsResult.push(tr)
                 updatingMessages.push(tr.openaiToolResult)
                 newlyAddedMessages.push(tr.openaiToolResult)
             }
@@ -72,7 +75,8 @@ export async function functionalChatCompletion(
 
         args.callbacks?.onOneChatCompletionFinished?.({
             assistantMessage,
-            usage
+            usage,
+            toolsResult
         })
         if (toolCalls.length === 0) {
             break
