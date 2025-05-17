@@ -46,8 +46,8 @@ export interface StreamingArgs {
     completion: Stream<OpenAI.Chat.Completions.ChatCompletionChunk> & {
         _request_id?: string | null
     }
-    onTextDelta?: (text: string) => void
-    onReasonDelta?: (text: string) => void
+    onTextDelta?: (text: string) => (void | Promise<void>)
+    onReasonDelta?: (text: string) => (void | Promise<void>)
 }
 
 export interface StreamingResult {
@@ -76,10 +76,10 @@ export interface FunctionalChatCompletionParamsStreaming {
     client: OpenAI
     body: RequestBody
     callbacks?: {
-        onStaringOneChatCompletion?: () => void
-        onOneChatCompletionFinished?: (args: OneChatCompletionCompletedArgs) => void
-        onTextDelta?: (text: string) => void
-        onReasonDelta?: (text: string) => void
+        onStaringOneChatCompletion?: () => (void | Promise<void>)
+        onOneChatCompletionFinished?: (args: OneChatCompletionCompletedArgs) => (void | Promise<void>)
+        onTextDelta?: (text: string) => (void | Promise<void>)
+        onReasonDelta?: (text: string) => (void | Promise<void>)
     }
 }
 export interface OneChatCompletionCompletedArgs {

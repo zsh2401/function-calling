@@ -25,7 +25,7 @@ export async function functionalChatCompletion(
     const updatingMessages = [...args.body.messages]
     const newlyAddedMessages: FunctionalCompletionMessage[] = []
     while (true) {
-        args.callbacks?.onStaringOneChatCompletion?.()
+        await args.callbacks?.onStaringOneChatCompletion?.()
         const completion =
             await args.client.chat.completions.create({
                 ...args.body,
@@ -73,7 +73,7 @@ export async function functionalChatCompletion(
             totalUsage = objectDelta(totalUsage, usage)
         }
 
-        args.callbacks?.onOneChatCompletionFinished?.({
+        await args.callbacks?.onOneChatCompletionFinished?.({
             assistantMessage,
             usage,
             toolsResult

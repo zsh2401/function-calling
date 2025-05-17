@@ -1,6 +1,6 @@
 {
     "name": "function-calling",
-    "version": "1.4.2",
+    "version": "1.4.3",
     "description": "The easiest way to perform your chat completion to LLM with function calling.",
     "main": "cjs/index.js",
     "module": "es/index.js",
