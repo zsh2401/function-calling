@@ -2,8 +2,8 @@
     <div>
         <br/>
         <h1>
-             <img src="./maple.png" style="height:20px"/> function-calling
-             <img src="./maple.png" style="height:20px"/> 
+             <img src="./maple.png" style="height:40px"/> function-calling
+             <img src="./maple.png" style="height:40px"/> 
         </h1>
     </div>
 </div>
