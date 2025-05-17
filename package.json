@@ -14,7 +14,7 @@
         "test": "vitest",
         "style": "pnpm prettier --check . && pnpm eslint .",
         "fix": "pnpm prettier --write . && pnpm eslint . --fix",
-        "prepublish": "pnpm style && pnpm build"
+        "prepublish": "pnpm build"
     },
     "keywords": [],
     "author": "zsh2401",
