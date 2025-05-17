@@ -63,9 +63,10 @@ export type RequestBody = Omit<
     OpenAI.Chat.Completions.ChatCompletionCreateParamsStreaming,
     'tools' | "stream" | "stream_options"
 > & {
+
     tools: BetterTool<any>[]
     stream: true
-    tool_choice: Exclude<ChatCompletionToolChoiceOption, "none">
+    tool_choice: ChatCompletionToolChoiceOption
     stream_options: {
         include_usage: true;
     }
