@@ -56,10 +56,10 @@ export async function functionalChatCompletion(
         })
 
         const responseMessage: FunctionalCompletionMessage =
-        {
-            role: 'assistant',
-            content: completionText,
-        }
+            {
+                role: 'assistant',
+                content: completionText,
+            }
 
         updatingMessages.push(responseMessage)
         newlyAddedMessages.push(responseMessage)
