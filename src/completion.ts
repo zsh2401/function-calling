@@ -26,7 +26,7 @@ export async function functionalChatCompletion(
     const newlyAddedMessages: FunctionalCompletionMessage[] = []
     while (true) {
         await args.callbacks?.onStaringOneChatCompletion?.()
-        const completion =
+        const completionStream =
             await args.client.chat.completions.create({
                 ...args.body,
                 messages: updatingMessages,
@@ -40,7 +40,7 @@ export async function functionalChatCompletion(
             reasonText,
             completionText,
         } = await streaming({
-            completion,
+            completionStream,
             onTextDelta: args.callbacks?.onTextDelta,
             onReasonDelta: args.callbacks?.onReasonDelta,
         })

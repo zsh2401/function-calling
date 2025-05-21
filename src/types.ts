@@ -43,7 +43,7 @@ export interface ToolDefinition<S extends ZodBase> {
  * The argument for {@link streaming} function.
  */
 export interface StreamingArgs {
-    completion: Stream<OpenAI.Chat.Completions.ChatCompletionChunk> & {
+    completionStream: Stream<OpenAI.Chat.Completions.ChatCompletionChunk> & {
         _request_id?: string | null
     }
     onTextDelta?: (text: string) => (void | Promise<void>)

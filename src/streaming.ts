@@ -17,7 +17,7 @@ export async function streaming(
     let completionText: string = ''
     let reasonText: string = ''
     const toolCalls: ChatCompletionMessageToolCall[] = []
-    for await (const chunk of args.completion) {
+    for await (const chunk of args.completionStream) {
         if (chunk.choices.length > 0) {
             const choice = chunk.choices[0]
             const delta = choice.delta

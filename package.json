@@ -1,6 +1,6 @@
 {
     "name": "function-calling",
-    "version": "1.4.4",
+    "version": "1.4.5",
     "description": "The easiest way to perform your chat completion to LLM with function calling.",
     "main": "cjs/index.js",
     "module": "es/index.js",
@@ -48,7 +48,7 @@
         "node": ">=18"
     },
     "peerDependencies": {
-        "openai": "^4.100.0",
+        "openai": "^4.97.0",
         "zod": "^3.24.4"
     },
     "dependencies": {
