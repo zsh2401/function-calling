@@ -52,10 +52,12 @@ export async function streaming(
                     buildingToolCall.type +=
                         deltaToolCall.type
                 }
-            } else if (delta.content) {
+            }
+            if (delta.content) {
                 completionText += delta.content
                 await args.onTextDelta?.(delta.content)
-            } else if ((delta as any).reasoning_content) {
+            }
+            if ((delta as any).reasoning_content) {
                 const reasonDelta = (delta as any)
                     .reasoning_content as string
                 reasonText += reasonDelta
