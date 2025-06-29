@@ -9,6 +9,7 @@ import { Stream } from 'openai/streaming'
 import { z } from 'zod'
 import { BetterTool } from './create'
 import { ToolCallResult } from './fulfill'
+import { Client } from '@modelcontextprotocol/sdk/client/index.js'
 
 export type ZodBase = z.ZodObject<any, any, any, any>
 export type OpenAITool =
@@ -74,6 +75,7 @@ export type RequestBody = Omit<
 }
 export interface FunctionalChatCompletionParamsStreaming {
     client: OpenAI
+    mcpClients?: Client[]
     body: RequestBody
     callbacks?: {
         onStaringOneChatCompletion?: () => (void | Promise<void>)

@@ -1,4 +1,3 @@
-import OpenAI from 'openai'
 import { CompletionUsage } from 'openai/resources'
 import {
     FunctionalChatCompletionParamsStreaming,
@@ -9,6 +8,8 @@ import {
 import { streaming } from './streaming'
 import { fulfill, ToolCallResult } from './fulfill'
 import { objectDelta } from './objectDelta'
+import { BetterTool } from './create'
+import { getToolsOfMCPClient } from './mcp'
 
 /**
  * Perform OpenAI chat completion with strong type definition support.
@@ -24,16 +25,29 @@ export async function functionalChatCompletion(
     let totalUsage: CompletionUsage | undefined = void 0
     const updatingMessages = [...args.body.messages]
     const newlyAddedMessages: FunctionalCompletionMessage[] = []
+    const allTools: BetterTool<any>[] = []
+    if (args.body.tools) {
+        allTools.push(...args.body.tools)
+        args.body.tools = void 0
+    }
+    if (args.mcpClients) {
+        for (const client of args.mcpClients) {
+            allTools.push(...await getToolsOfMCPClient(client))
+        }
+        args.mcpClients = void 0
+    }
+
     while (true) {
         await args.callbacks?.onStaringOneChatCompletion?.()
         const completionStream =
             await args.client.chat.completions.create({
                 ...args.body,
                 messages: updatingMessages,
-                tools: args.body.tools
-                    ? args.body.tools.map((t) => t.openAIFormat)
+                tools: allTools.length > 0
+                    ? allTools.map((t) => t.openAIFormat)
                     : void 0,
             })
+
         const {
             usage,
             toolCalls,
